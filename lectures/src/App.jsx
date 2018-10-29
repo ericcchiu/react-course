@@ -46,11 +46,21 @@ class App extends Component {
   }
 
   render() {
+    const style = { 
+      backgroundColor: 'silver', 
+      font: 'inherit', 
+      border: '1px solid blue', 
+      padding: '8px', 
+      borderRadius: '4px', 
+      cursor: 'pointer'
+    }
     return (
       <div className="App">
         <h1>React Course</h1>
         <button 
-          onClick={() => this.switchNameHandler('Max')}>Switch name</button>
+          onClick={() => this.switchNameHandler('Max')}
+          style={style}
+          >Switch name</button>
         <Person 
           name={this.state.persons[0].name} 
           age={this.state.persons[0].age}
