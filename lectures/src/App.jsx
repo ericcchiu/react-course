@@ -25,16 +25,16 @@ class App extends Component {
     showPersons: false
   }
   
-  switchNameHandler = (newName) => { 
-    console.log('Switch name button was clicked');
-    this.setState({
-      persons: [
-        { name: newName, age: 25 }, 
-        { name: 'Kim', age: 26 }, 
-        { name: 'Grayson', age: 27 }
-      ]
-    });
-  }
+  // switchNameHandler = (newName) => { 
+  //   console.log('Switch name button was clicked');
+  //   this.setState({
+  //     persons: [
+  //       { name: newName, age: 25 }, 
+  //       { name: 'Kim', age: 26 }, 
+  //       { name: 'Grayson', age: 27 }
+  //     ]
+  //   });
+  // }
 
   nameChangedHandler = (event) => {
     this.setState({ 
@@ -51,6 +51,24 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = (personIndex) => { 
+    // Does not maintain single source of truth, it changes the state.
+    // const persons = this.state.persons; 
+    // persons.splice(personIndex, 1); 
+    // this.setState({
+    //   persons: persons 
+    // })
+
+    // Create a copy of the state to maintain single source of truth
+
+    const persons = [...this.state.persons]; 
+    persons.splice(personIndex, 1); 
+    this.setState({
+      persons: persons
+    })
+
+  }
+
   render() {
     const style = { 
       backgroundColor: 'white', 
@@ -65,10 +83,11 @@ class App extends Component {
     if (this.state.showPersons) { 
       persons = ( 
         <div>
-        {this.state.persons.map(person => {
+        {this.state.persons.map((person, index) => {
           return <Person 
             name={person.name}
-            age={person.age}  
+            age={person.age} 
+            click={() => this.deletePersonHandler(index)}
             />
         })}
         {/* <Person 
@@ -84,7 +103,7 @@ class App extends Component {
         <Person 
           name={this.state.persons[2].name} 
           age={this.state.persons[2].age} /> */}
-    </div>
+        </div>
     );
     }
 
@@ -92,10 +111,10 @@ class App extends Component {
     return (
       <div className="App">
         <h1>React Course</h1>
-        <button 
+        {/* <button 
           onClick={() => this.switchNameHandler('Max')}
           style={style}
-          >Switch name</button>
+          >Switch name</button> */}
         <button 
           onClick={this.togglePersonsHandler}
           style={style}>Toggle List</button>
