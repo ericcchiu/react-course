@@ -11,19 +11,34 @@ class App extends Component {
       'gandalfthegrey'
     ]
   }
+  changeUsernameHandler = (event) => { 
+    console.log('The changeUsernameHandler was activated');
+    this.setState({
+      username: [
+        event.target.value, 
+        'hobbitons', 
+        'gandalfthegrey'
+      ]
+    })
+
+  } 
+
   render() {
     return (
       <div className="App">
       <h1>Assignment 1</h1>
-      <UserInput />
-      <UserOutput
-        username='erikthered'
+      <UserInput 
+        changeInput={this.changeUsernameHandler}
+        currentUser={this.state.username[0]}
       />
       <UserOutput
-        username='hobbitons'
+        username={this.state.username[0]}
       />
       <UserOutput
-        username='gandalfthegrey'
+        username={this.state.username[1]}
+      />
+      <UserOutput
+        username={this.state.username[2]}
       />
       </div>
     );
