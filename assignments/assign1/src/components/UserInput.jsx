@@ -1,8 +1,9 @@
-import React from 'react'; 
+import React from 'react';
+import './UserInput.css'; 
 
 const userInput = (props) => { 
   return ( 
-    <div>
+    <div className='UserInput'>
       <p>Please enter your username: </p>
       <input 
         type='text'
