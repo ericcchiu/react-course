@@ -36,14 +36,39 @@ class App extends Component {
   //   });
   // }
 
-  nameChangedHandler = (event) => {
-    this.setState({ 
-      persons: [
-        { id: '001', name: 'Max', age: 25 }, 
-        { id: '002', name: event.target.value, age: 26 },
-        { id: '003', name: 'Jack', age: 27 }
-      ]
+  nameChangedHandler = (event, id) => {
+    // Use findIndex to determine the targeted element's index that is changed 
+    const personIndex = this.state.persons.findIndex(individual => {
+      return individual.id === id;
+    });
+
+    // Create a new copy of the person object to maintain single source of truth
+    const person = { 
+      ...this.state.persons[personIndex]
+    }
+
+    // const person = Object.assign({}, this.state.persons[personIndex]);
+
+    // Update the name property of the target element 
+    person.name = event.target.value; 
+
+    // Create a copy of the original state 
+    const persons = [...this.state.persons]; 
+    // Reassign the changed person object 
+    persons[personIndex] = person;
+    
+    // Update the state 
+    this.setState({
+      persons: persons
     })
+    
+    // this.setState({ 
+    //   persons: [
+    //     { id: '001', name: 'Max', age: 25 }, 
+    //     { id: '002', name: event.target.value, age: 26 },
+    //     { id: '003', name: 'Jack', age: 27 }
+    //   ]
+    // })
   }
   togglePersonsHandler = () => { 
     const doesShow = this.state.showPersons; 
@@ -89,7 +114,9 @@ class App extends Component {
             name={person.name}
             age={person.age} 
             click={() => this.deletePersonHandler(index)}
-            key={person.id} />
+            key={person.id} 
+            changed={(event) => this.nameChangedHandler(event, person.id)}
+            />
         })}
         {/* <Person 
           name={this.state.persons[0].name} 
